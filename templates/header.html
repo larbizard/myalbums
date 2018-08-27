@@ -1,0 +1,20 @@
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/albums/">MyAlbums</a>
+      {% if user.is_authenticated %}
+  	  <ul class="nav navbar-nav navbar-right">
+        <li><a href="/createAlbum/"><span class="glyphicon glyphicon-plus"></span> Ajouter un album </a></li>
+        {% if user.is_staff %}
+        <li><a href="/admin/"><span class="glyphicon glyphicon-wrench"></span> Administration</a></li>
+      	<li><a href="/admin/auth/user/{{ user.id }}/change/"><span class="glyphicon glyphicon-user"></span> {{ user.username }} est connecté</a></li>
+        {% endif %}
+      	<li><a href="/accounts/logout/"><span class="glyphicon glyphicon-log-out"></span> Se déconnecter </a></li>
+      </ul>
+      {% else %}
+  	  <ul class="nav navbar-nav navbar-right">
+      	<li><a href="/accounts/register/"><span class="glyphicon glyphicon-user"></span> S'enregistrer</a></li>
+      	<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-out"></span> Se connecter </a></li>
+      </ul>
+      {% endif %}
+    </nav>
+    <!--<a style="padding-left: 10%;" href="/fiches/"><img  style="width:64px" src="/static/altisconseils/images/logo_white.png" alt="Am"/></a>-->

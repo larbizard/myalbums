@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+
+    <title>{{ title }}</title>
+
+
+    <style>
+      /* jQuery UI Datepicker moving pixels fix */
+      table.ui-datepicker-calendar {border-collapse: separate;}
+      .ui-datepicker-calendar td {border: 1px solid transparent;}
+
+      /* jQuery UI Datepicker hide datepicker helper */
+      #ui-datepicker-div {display:none;}
+
+      /* jQuery UI Datepicker emphasis on selected dates */
+      .ui-datepicker .ui-datepicker-calendar .ui-state-highlight a {
+              background: #a8d08d none;
+              color: white;
+      }
+    </style>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-multidatespicker@1.6.6/jquery-ui.multidatespicker.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+    </script>
+
+    <style>
+        body {
+          background-color: #191414;
+        }
+
+        p, a, h1, h2, h3, h4, h5 {
+          color: #1db954;
+        }
+
+        a:hover {
+          color: #ffffff;
+        }
+
+        .sidebar {
+            width: 300px;
+        }
+
+        .navbar {
+          background-color: #191414;
+        }
+
+        main {
+          height: 400px;
+        }
+
+    </style>
+    <!--<link href="//cdn.jsdelivr.net/npm/jquery-easy-loading/dist/jquery.loading.min.css" rel="stylesheet">-->
+  </head>
+
+  <body>
+    {% include 'header.html' %}
+    <div class="container-fluid">
+      <div class="row">
+        <!--<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Year-end sale
+                </a>
+              </li>-->
+              <!--<li class="nav-item">
+                <a class="nav-link" href="#">
+                <span data-feather="home"></span>
+                Designed by mySeat
+              </a>
+              </li>
+            </ul>
+          </div>
+        </nav>-->
+
+        <main role="main" style="margin-left: 5%; margin-right: 5%;">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">          
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <!--<div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary">Share</button>
+                <button class="btn btn-sm btn-outline-secondary">Export</button>
+              </div>
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                <span data-feather="calendar"></span>
+                This week
+              </button>-->
+            </div>
+            <form class=".control-form" method='POST' action='' enctype='multipart/form-data'>
+            {% load crispy_forms_tags %}
+            {% csrf_token %}
+            <div class="form-group">
+              {{ form|crispy }}
+            </div>
+            <input type='submit' class='btn btn-default' value='{{ title }}'>
+            </form>
+          </div>
+        </main>
+            {% include 'footer.html' %}
+      </div>
+    </div>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+  </body>
+</html>
+

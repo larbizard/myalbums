@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+
+    <title>{{ title }}</title>
+
+
+    <style>
+      /* jQuery UI Datepicker moving pixels fix */
+      table.ui-datepicker-calendar {border-collapse: separate;}
+      .ui-datepicker-calendar td {border: 1px solid transparent;}
+
+      /* jQuery UI Datepicker hide datepicker helper */
+      #ui-datepicker-div {display:none;}
+
+      /* jQuery UI Datepicker emphasis on selected dates */
+      .ui-datepicker .ui-datepicker-calendar .ui-state-highlight a {
+              background: #a8d08d none;
+              color: white;
+      }
+    </style>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-multidatespicker@1.6.6/jquery-ui.multidatespicker.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+    </script>
+
+    <style>
+        body {
+          background-color: #191414;
+        }
+
+        p, a, h1, h2, h3, h4, h5 {
+          color: #1db954;
+        }
+
+        a:hover {
+          color: #ffffff;
+        }
+
+        .sidebar {
+            width: 300px;
+        }
+
+        .navbar {
+          background-color: #191414;
+        }
+
+        main {
+          height: 400px;
+        }
+
+        /*Star scoring*/
+
+    </style>
+    <!--<link href="//cdn.jsdelivr.net/npm/jquery-easy-loading/dist/jquery.loading.min.css" rel="stylesheet">-->
+  </head>
+
+  <body>
+    {% include 'header.html' %}
+    <div class="container-fluid">
+      <div class="row">
+        <!--<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Year-end sale
+                </a>
+              </li>-->
+              <!--<li class="nav-item">
+                <a class="nav-link" href="#">
+                <span data-feather="home"></span>
+                Designed by mySeat
+              </a>
+              </li>
+            </ul>
+          </div>
+        </nav>-->
+
+        <main role="main" style="margin-left: 5%; margin-right: 5%;">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">          
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <!--<div class="btn-group mr-2">
+                <button class="btn btn-sm btn-outline-secondary">Share</button>
+                <button class="btn btn-sm btn-outline-secondary">Export</button>
+              </div>
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                <span data-feather="calendar"></span>
+                This week
+              </button>-->
+            </div>
+            <div id="album_list">
+                <h2>{{title}}</h2>
+                {% for album in album_list %}
+                  <a href="/{{ album.pk }}"><p>{{ album.name }} - {{ album.artist }}</p></a>
+                  <form action="/albumScore/" method="POST" class="post-form" id="{{ album.id }}">
+                    {% csrf_token %}
+                    <select name="score" id="post-text" required="true">
+                      <option value="10">10</option>
+                      <option value="9">9</option>
+                      <option value="8">8</option>
+                      <option value="7">7</option>
+                      <option value="6">6</option>
+                      <option value="5">5</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">5</option>
+                      <option value="2">5</option>
+                      <option value="1">4</option>
+                      <input type="submit" value="Noter">
+                    </select>
+                  </form>
+                  <div id="result{{ album.id }}">
+                  </div>
+                {% endfor %}
+            </div>
+          </div>
+        </main>
+            {% include 'footer.html' %}
+      </div>
+    </div>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+    <script>
+      $(function() {
+
+
+    // This function gets cookie with a given name
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    /*
+    The functions below will create a header with csrftoken
+    */
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    function sameOrigin(url) {
+        // test that a given url is a same-origin URL
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                // Send the token to same-origin, relative URLs only.
+                // Send the token only if the method warrants CSRF protection
+                // Using the CSRFToken value acquired earlier
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+      });
+
+    });
+
+    // AJAX for posting
+    function create_post(scoreId) {
+       console.log("create post is working!") // sanity check
+        $.ajax({
+            url : "albumScore/", // the endpoint
+            type : "POST", // http method
+            data : { 
+              the_post : document.getElementById(scoreId).childNodes[3].value,
+              album_id : scoreId,
+
+            }, // data sent with the post request
+
+            // handle a successful response
+            success : function(json) {
+                $('#'+scoreId).val(''); // remove the value from the input
+                console.log(json); // log the returned json to the console
+                console.log("success"); // another sanity check
+            },
+
+            // handle a non-successful response
+            error : function(xhr,errmsg,err) {
+                $document.getElementById("#reslut" +scoreId).innerHTML("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    };
+
+    // Submit post on submit
+    $('.post-form').on('submit', function(event){
+        event.preventDefault();
+        console.log("form submitted!")  // sanity check
+        create_post($(this).attr('id'));
+    });
+    </script>
+  </body>
+</html>
+
