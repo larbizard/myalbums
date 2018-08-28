@@ -60,10 +60,6 @@
           color: #ffffff;
         }
 
-        .control-label {
-          color: #1db954;
-        }
-
         .sidebar {
             width: 300px;
         }
@@ -72,9 +68,7 @@
           background-color: #191414;
         }
 
-        main {
-          height: 400px;
-        }
+        /*Star scoring*/
 
     </style>
     <!--<link href="//cdn.jsdelivr.net/npm/jquery-easy-loading/dist/jquery.loading.min.css" rel="stylesheet">-->
@@ -115,14 +109,12 @@
                 This week
               </button>-->
             </div>
-            <div id="album_detail">
-              <h4><a href="/">Retourner à tous les albums</a><h4>
-
-              {% if instance %}
-                <img src="{{ instance.coverImage }}" width="400" />
-                {{ instance.name }}
-                {{ instance.artist }}
-              {% endif %}
+            <div id="album_list">
+                <h2>{{title}}</h2>
+                {% for score in given_scores %}
+                  <a href="/{{ score.album.pk }}"><img src="{{ score.album.coverImage }}" width="400" /><h3>{{ score.album.name }} - {{ score.album.artist }}</h3></a>
+                  <h4>La note donnee a cet album est : {{score.value}}/10</h4>
+                {% endfor %}
             </div>
           </div>
         </main>
@@ -132,9 +124,6 @@
 
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-    <script>
-      feather.replace()
-    </script>
   </body>
 </html>
 

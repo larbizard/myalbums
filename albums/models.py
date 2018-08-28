@@ -13,6 +13,7 @@ class Album(models.Model):
 	name = models.CharField(max_length=50)
 	artist = models.CharField(max_length=50)
 	user  = models.ForeignKey(User, on_delete=models.CASCADE)
+	imageCover = models.FileField(upload_to='documents/')
 
 	def __str__(self):
 		return self.name
@@ -30,8 +31,8 @@ class Title(models.Model):
 
 
 class Score(models.Model):
-	album = models.OneToOneField(Album, on_delete=models.CASCADE, related_name="album")
-	user  = models.OneToOneField(User, on_delete=models.CASCADE)
+	album = models.ForeignKey(Album, on_delete=models.CASCADE)
+	user  = models.ForeignKey(User, on_delete=models.CASCADE)
 	value = models.DecimalField("Score", default=0, max_digits=2, decimal_places=0)
 
 	def __str__(self):

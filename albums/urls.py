@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^createAlbum/$', views.createAlbum, name="createAlbum"),
     url(r'^(?P<id>\d+)/$', views.detailAlbum, name="detailAlbum"),
     url(r'^albumScore/$', views.albumScore, name="albumScore"),
+    url(r'^profil/$', views.profil, name="profil"),
 ]

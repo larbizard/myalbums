@@ -3,7 +3,9 @@
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/albums/">MyAlbums</a>
       {% if user.is_authenticated %}
   	  <ul class="nav navbar-nav navbar-right">
+        <li><a href="/"><span class="glyphicon glyphicon-home"></span> Overview </a></li>
         <li><a href="/createAlbum/"><span class="glyphicon glyphicon-plus"></span> Ajouter un album </a></li>
+        <li><a href="/profil/"><span class="glyphicon glyphicon-th-large"></span> Mon Profil </a></li>
         {% if user.is_staff %}
         <li><a href="/admin/"><span class="glyphicon glyphicon-wrench"></span> Administration</a></li>
       	<li><a href="/admin/auth/user/{{ user.id }}/change/"><span class="glyphicon glyphicon-user"></span> {{ user.username }} est connecté</a></li>

@@ -60,16 +60,16 @@
           color: #ffffff;
         }
 
+        .control-label {
+          color: #1db954;
+        }
+        
         .sidebar {
             width: 300px;
         }
 
         .navbar {
           background-color: #191414;
-        }
-
-        main {
-          height: 400px;
         }
 
         /*Star scoring*/
@@ -115,8 +115,14 @@
             </div>
             <div id="album_list">
                 <h2>{{title}}</h2>
+                <h3>Les albums entrés par tous les utilisateurs</h3>
+                <h6>Vous pouvez noter directement les albums ici</h6>
                 {% for album in album_list %}
-                  <a href="/{{ album.pk }}"><p>{{ album.name }} - {{ album.artist }}</p></a>
+                  <a href="/{{ album.pk }}">
+                    <p>{{ album.name }} - {{ album.artist }}</p>
+                    <img src="{{ MEDIA_URL}}/{{ album.imageCover }}" width="400" />
+                  </a>
+
                   <form action="/albumScore/" method="POST" class="post-form" id="{{ album.id }}">
                     {% csrf_token %}
                     <select name="score" id="post-text" required="true">
@@ -220,15 +226,15 @@
 
             // handle a successful response
             success : function(json) {
-                $('#'+scoreId).val(''); // remove the value from the input
+                document.getElementById("result" +scoreId).innerHTML = "<div class='alert-box alert radius' data-alert>Noté !</div>"; // remove the value from the input
                 console.log(json); // log the returned json to the console
                 console.log("success"); // another sanity check
             },
 
             // handle a non-successful response
             error : function(xhr,errmsg,err) {
-                $document.getElementById("#reslut" +scoreId).innerHTML("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                document.getElementById("result" +scoreId).innerHTML = "<div class='alert-box alert radius' data-alert>Oops! Erreure veuillez contacter l'administrateur du syteme : "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"; // add the error to the dom
                 console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
             }
         });

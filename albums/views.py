@@ -9,10 +9,10 @@ from django.contrib.auth.decorators import login_required
 from django.forms.models import inlineformset_factory
 
 from .models import Album, Title, Score
-from .controllers import addAlbum
+
 from .albums import AlbumCreationForm
 
-from .controllers import addAlbum, saveScore
+from .controllers import saveScore
 
 import json
 import pdb
@@ -27,18 +27,25 @@ def overview(request):
     }
     return render(request, "index.html", context)
 
+@login_required(login_url='/accounts/login/')
+def profil(request):
+    given_scores = Score.objects.filter(user=request.user)
+
+    context = {
+        "given_scores": given_scores,
+        "title": "Mon profil - Les albums que j'ai noté",
+    }
+    return render(request, "profil.html", context)
+
 
 @login_required(login_url='/accounts/login/')
 def createAlbum(request):
-    form = AlbumCreationForm(request.POST or None)
+    form = AlbumCreationForm(request.POST, request.FILES)
 
     if form.is_valid():
-        cd = form.cleaned_data
-        #now in the object cd, you have the form as a dictionary.
-        name = cd.get('name')
-        artist = cd.get('artist')
-        instance = addAlbum(name, artist, request.user)
-        #messages.success(request, "Créé avec succés")
+        instance = form.save(commit=False)
+        instance.user = request.user
+        instance.save()
         return HttpResponseRedirect(instance.get_absolute_url())
 
     context = {
@@ -67,18 +74,20 @@ def albumScore(request):
         #pdb.set_trace()
         response_data = {}
 
+
+
         album =  Album.objects.filter(id=album_id)[0]
 
-        score = saveScore(value=post_text, album=album, user=request.user)
-        
+        try:
+        	Score.objects.filter(album=album, user=request.user).update(value=post_text)
+
+        except:
+        	saveScore(value=post_text, album=album, user=request.user)
+       
         #score = Score(value=post_text, album=album, user=request.user)
         #score.save()
 
         response_data['result'] = 'Note sauvegardee avec succes !'
-        response_data['postpk'] = score.pk
-        response_data['value'] = score.value
-        response_data['album'] = score.album
-        response_data['user'] = score.author.username
 
         return HttpResponse(
             json.dumps(response_data),
