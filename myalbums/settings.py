@@ -25,7 +25,7 @@ SECRET_KEY = '241b09=zh&x17(qr!j^g&v^0hu1qvi0y#g&*oq&m*4g+$e=ikp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['myalbums-savoir-faire-linux.herokuapp.com']
 
 
 # Application definition
