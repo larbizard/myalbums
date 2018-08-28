@@ -12,3 +12,8 @@ Unit tests for each form
 Download album covers
 User profile that list all scores
 Django Rest API Framework
+
+Demo on Heroku:
+https://myalbums-savoir-faire-linux.herokuapp.com/
+login: admin
+password: savoirfairelinux
