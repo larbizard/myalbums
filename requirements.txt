@@ -7,3 +7,5 @@ Pillow==5.2.0
 pytz==2018.5
 six==1.11.0
 sqlparse==0.2.4
+gunicorn==19.8.1
+
