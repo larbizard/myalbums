@@ -13,7 +13,7 @@ class Album(models.Model):
 	name = models.CharField(max_length=50)
 	artist = models.CharField(max_length=50)
 	user  = models.ForeignKey(User, on_delete=models.CASCADE)
-	imageCover = models.FileField(upload_to='documents/')
+	imageCover = models.FileField(upload_to='documents/', blank=True)
 
 	def __str__(self):
 		return self.name
