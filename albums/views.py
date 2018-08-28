@@ -75,8 +75,13 @@ def albumScore(request):
         response_data = {}
 
 
-
-        album =  Album.objects.filter(id=album_id)[0]
+        try:
+            album =  Album.objects.filter(id=album_id)[0]
+        except:
+            return HttpResponse(
+                json.dumps({"Error album": "No album with this index"}),
+                content_type="application/json"
+            )            
 
         try:
         	Score.objects.filter(album=album, user=request.user).update(value=post_text)
