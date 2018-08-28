@@ -71,9 +71,7 @@ def albumScore(request):
     if request.method == 'POST':
         post_text = request.POST.get('the_post')
         album_id = request.POST.get('album_id')
-        #pdb.set_trace()
         response_data = {}
-
 
         try:
             album =  Album.objects.filter(id=album_id)[0]
@@ -83,11 +81,10 @@ def albumScore(request):
                 content_type="application/json"
             )            
 
-        try:
-        	Score.objects.filter(album=album, user=request.user).update(value=post_text)
-
-        except:
-        	saveScore(value=post_text, album=album, user=request.user)
+        if(len(Score.objects.filter(album=album, user=request.user)) == 1):
+            Score.objects.filter(album=album, user=request.user).update(value=post_text)
+        else:
+            saveScore(value=post_text, album=album, user=request.user)
        
         #score = Score(value=post_text, album=album, user=request.user)
         #score.save()

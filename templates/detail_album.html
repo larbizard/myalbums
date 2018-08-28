@@ -119,7 +119,7 @@
               <h4><a href="/">Retourner à tous les albums</a><h4>
 
               {% if instance %}
-                <img src="{{ instance.coverImage }}" width="400" />
+                <img src="{{ MEDIA_URL}}/{{ instance.imageCover }}" width="400" />
                 {{ instance.name }}
                 {{ instance.artist }}
               {% endif %}
